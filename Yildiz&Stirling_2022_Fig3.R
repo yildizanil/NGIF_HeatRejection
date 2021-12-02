@@ -21,16 +21,17 @@ axis_ticks2 <- seq(startdate,enddate,60*60*24)
 # defining file location to export pdf
 file_loc <- "Figures/"
 # plotting a pdf file
-pdf(paste0(file_loc,"FIG_Meteo_v3.pdf"),height=105/25.4,width=150/25.4)
+pdf(paste0(file_loc,"Yildiz&Stirling_2022_Fig3.pdf"),height=110/25.4,width=150/25.4)
 # creating a custom layout
-layout(matrix(c(1,2,3,4),nrow=4,ncol=1),heights=c(10,45,45,5))
+layout(matrix(c(1,2,3,4),nrow=4,ncol=1),heights=c(15,45,45,5))
 # legend
 par(mar=c(0,0,0,0),mgp=c(0.1,0.1,0),family="serif",ps=10,cex=1,cex.main=1,las=1)
 plot(0,0,xlab=NA,ylab=NA,axes=F,pch="")
-legend("center",c("Rainfall","Relative Humidity","Air temperature","Net radiation"),
+legend("center",c("Rainfall","Air temperature","Max. - min. air temperature",
+                  "Relative Humidity","Max. - min. relative humidity","Net radiation"),
        bty="n",ncol=2,
-       pch=c(15,NA,NA,NA),lwd=c(NA,2,2,2),
-       lty=c(NA,2,1,3),col=c(8,blue,2,1),adj=c(0,0.5),xjust=0.5)
+       pch=c(15,NA,15,NA,15,NA),lwd=c(NA,2,NA,2,NA,2),
+       lty=c(NA,1,NA,2,NA,3),col=c(8,2,rgb(1,0,0,0.2),blue,rgb(32/256,137/256,203/256,0.2),1),adj=c(0,0.5),xjust=0.5)
 # first subplot
 par(mar=c(1,2.25,0.25,2.25),mgp=c(0.1,0.1,0),family="serif",ps=10,cex=1,cex.main=1,las=1)
 plot(0,0,type="l",lwd=3,ylim=c(0,50),xlim=c(startdate,enddate),axes=F,xlab=NA,ylab=NA,pch="")
