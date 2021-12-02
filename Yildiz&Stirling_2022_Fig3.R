@@ -19,7 +19,7 @@ axis_names <- paste0(substr(axis_seq,start=9,stop=10),"-",substr(axis_seq,start=
 axis_ticks1 <- as.POSIXct(axis_seq,"UTC")
 axis_ticks2 <- seq(startdate,enddate,60*60*24)
 # defining file location to export pdf
-file_loc <- "C:/Users/Anil/Desktop/Geothermics_Final/"
+file_loc <- "Figures/"
 # plotting a pdf file
 pdf(paste0(file_loc,"FIG_Meteo_v3.pdf"),height=105/25.4,width=150/25.4)
 # creating a custom layout
@@ -57,7 +57,7 @@ lines(meteo$AirTemp_Mean~as.POSIXct(meteo$Time,"UTC"),col=2,lwd=2)
 par(las=0)
 box()
 mtext("Daily rainfall [mm]",side=2,line=1.25)
-mtext("Air temperature [?C]",side=4,line=1.25)
+mtext("Air temperature [°C]",side=4,line=1.25)
 # second subplot
 par(mar=c(1,2.25,0.25,2.25),mgp=c(0.1,0.1,0),family="serif",ps=10,cex=1,cex.main=1,las=1)
 plot(0,0,type="l",lwd=3,ylim=c(0,100),xlim=c(startdate,enddate),axes=F,xlab=NA,ylab=NA,pch="")
