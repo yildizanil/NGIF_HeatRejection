@@ -39,9 +39,9 @@ index.col <- c(green,blue,green,blue,green,blue,green,blue)
 index.name <- c("@ 100 mm","@ 250 mm","@ 350 mm","@ 450 mm","@ 550 mm","@ 650 mm","@ 750 mm","@ 850 mm")
 index.column <- c(4,6,7,8,9,10,11,13)
 # defining file location to export pdf
-file_loc <- "C:/Users/Anil/Desktop/Geothermics_Final/"
+file_loc <- "Figures/"
 # plotting a pdf 
-pdf(paste0(file_loc,"FIG_SetI_v5.pdf"),height=115/25.4,width=150/25.4)
+pdf(paste0(file_loc,"Yildiz&Stirling_2022_Fig5.pdf"),height=115/25.4,width=150/25.4)
 # defining a custom layout
 layout(matrix(c(1,2,3,4,5),5,1),heights=c(5,10,50,40,10),widths=c(150))
 # first legend
@@ -74,7 +74,7 @@ for(i in 1:length(index.column))
 }
 points(meteo$AirTemp_Mean[1:18]~meteo.midday[1:18],col=1,pch=10)
 par(las=0)
-mtext("Air/soil temperature [?C]",side=2,line=1)
+mtext("Air/soil temperature [°C]",side=2,line=1)
 for(i in 1:3)
 {
   text(as.POSIXct(dates[i,1],"UTC")+60*60*36,30,paste0("Test I-",i),adj=c(0.5,1),font=2)

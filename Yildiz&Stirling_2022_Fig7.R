@@ -146,9 +146,9 @@ axis_ticks2 <- seq(startdate,enddate,60*60*24)
 index <- c(3,6,8,10,12,14,16,18)
 depth <- seq(50,850,50)
 # Defining file location
-file.loc <- "C:/Users/Anil/Desktop/Geothermics_Final/"
+file.loc <- "Figures/"
 # Plotting a pdf 
-pdf(paste0(file.loc,"FIG_ModelSolution_v5.pdf"),height=140/25.4,width=190/25.4)
+pdf(paste0(file.loc,"Yildiz&Stirling_2022_Fig7.pdf"),height=140/25.4,width=190/25.4)
 # Generating a layout
 layout(matrix(c(1,2,3,4,5,10,1,6,7,8,9,10),nrow=6,ncol=2,byrow=F),width=c(95,95),heights=c(10,30,30,30,30,10))
 # Plotting subfigures
@@ -181,7 +181,7 @@ for(i in 1:8)
   if(i==2 | i==6)
   {
     par(las=0)
-    mtext("Soil temperature [?C]",side=2,line=1,at=10)
+    mtext("Soil temperature [°C]",side=2,line=1,at=10)
   }
 }
 

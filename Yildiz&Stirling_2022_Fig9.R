@@ -99,9 +99,7 @@ axis_ticks2 <- seq(startdate,enddate,60*60*24)
 
 
 
-pdf(file="C:/Users/Anil/Desktop/Geothermics_Final/FIG_SoilTemp_Pred_v2.pdf",width=(150/25.4),height=c(110/25.4))
-
-png(file="C:/Users/Anil/Desktop/Geothermics_Final/FIG_SoilTemp_Pred_v2.png",width=(150),height=c(110),units="mm",res=1000)
+png(file="Figures/Yildiz&Stirling_2022_Fig9.png",width=150,height=110,units="mm",res=1000)
 
 layout(matrix(c(1,2),nrow=1,ncol=2),widths=c(10,2))
 par(mar=c(2,2.25,0.25,0.25),mgp=c(0.1,0.1,0),family="serif",ps=10,cex=1,cex.main=1,las=1)
@@ -133,6 +131,6 @@ for(i in 1:20)
   text(0.55,(i-1)*(0.9/20),temp[i],adj=c(0,0.5))
 }
 text(0.55,0.9,30,adj=c(0,0.5))
-text(0,1,"Temperature \n? C",adj=c(0,1))
+text(0,1,"Temperature \n °C",adj=c(0,1))
 
 dev.off()

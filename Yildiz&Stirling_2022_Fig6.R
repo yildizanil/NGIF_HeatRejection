@@ -37,9 +37,9 @@ time <- seq(startdate,enddate,60*15)
 # calculation the difference in soil temperature between the end and beginning of each test
 diff <- soil_temp_set2[which(time%in%utc(dates[4:27,2])),4:14]-soil_temp_set2[which(time%in%utc(dates[4:27,1]))+1,4:14]
 # defining file location to export pdf
-file_loc <- "C:/Users/Anil/Desktop/Geothermics_Final/"
+file_loc <- "Figures/"
 # plotting a pdf file
-pdf(paste0(file_loc,"FIG_SetII_v2.pdf"),height=105/25.4,width=150/25.4)
+pdf(paste0(file_loc,"Yildiz&Stirling_2022_Fig6.pdf"),height=105/25.4,width=150/25.4)
 
 layout(matrix(c(1,2,3),nrow=3,ncol=1,byrow=T),widths=c(150),heights=c(10,50,50))
 par(mar=c(0,0,0,0),mgp=c(0.1,0.1,0),family="serif",ps=10,cex=1,cex.main=1,las=1,pty="m")
@@ -55,7 +55,7 @@ axis(1,tck=0.04,at=axis_ticks1,labels=axis_names)
 axis(2,tck=0.02)
 box()
 par(las=0)
-mtext("Soil temperature @ 850 mm [?C]",side=2,line=1.25)
+mtext("Soil temperature @ 850 mm [°C]",side=2,line=1.25)
 mtext("Time [DD-MM-2019]",side=1,line=1)
 
 lines(soil_temp_set2[,13]~utc(soil_temp_set2$Time),lwd=2,col=blue)
@@ -80,7 +80,7 @@ arrows(x0=colMeans(diff),y0=as.numeric(substr(colnames(diff),2,4)),
 points(as.numeric(substr(colnames(diff),2,4))~colMeans(diff),pch=21,bg=blue)
 box()
 par(las=0)
-mtext("Temperature difference [?C]",side=1,line=1)
+mtext("Temperature difference [°C]",side=1,line=1)
 mtext("Depth[mm]",side=2,line=1.25)
 text(-0.5,0,"B",font=2,adj=c(0,1))
 
