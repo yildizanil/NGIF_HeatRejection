@@ -22,9 +22,9 @@ axis_names <- paste0(substr(axis_seq,start=9,stop=10),"-",substr(axis_seq,start=
 axis_ticks1 <- as.POSIXct(axis_seq,"UTC")
 axis_ticks2 <- seq(startdate,enddate,60*60*24)
 # defining file location to export pdf
-file_loc <- "C:/Users/Anil/Desktop/Geothermics_Final/"
+file_loc <- "Figures/"
 # Plotting a pdf 
-pdf(paste0(file_loc,"FIG_Hydro_v3.pdf"),height=130/25.4,width=150/25.4)
+pdf(paste0(file_loc,"Yildiz&Stirling_2022_Fig4.pdf"),height=130/25.4,width=150/25.4)
 # Creating a custom layout
 layout(matrix(c(1,2,2,rep(3,5),c(4,5,6,7,8,9,10,11),12,13,13,rep(14,5)),nrow=8,ncol=3),
        heights=c(5,30,5,20,20,20,20,10),widths=c(5,140,5))
