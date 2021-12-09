@@ -5,6 +5,14 @@
 utc <- function(x) {
   as.POSIXct(x, "UTC")
   }
+plot_white_space <- function(margin) {
+  par(mar = margin, mgp = c(0.1, 0.1, 0),
+  family = "serif", ps = 10,
+  cex = 1, cex.main = 1, las = 1)
+  plot(0, 0, pch = "",
+  xlab = NA, ylab = NA,
+  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+}
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
@@ -35,34 +43,19 @@ layout(
   nrow = 8, ncol = 3), heights = c(5, 30, 5, 20, 20, 20, 20, 10),
   widths = c(5, 140, 5))
 # Axis labels in empty spaces
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
 par(las = 0)
 mtext("Water flux [mm]", side = 2, line = -1)
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
 par(las = 0)
 mtext("Volumetric water content [%]", side = 2, line = -1)
 # First legend
-par(mar = c(0, 1.25, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space with 1.25 margin on the left side
+plot_white_space(margin = c(0, 1.25, 0, 0))
 legend("center", c("Rainfall", "Potential evapotranspiration"),
   col = c(1), pt.bg = c(8, green), ncol = 2,
   bty = "n", adj = c(0, 0.5), pch = c(22, 22))
@@ -91,11 +84,8 @@ for (i in seq_len(nrow(water_flux))) {
 par(las = 0)
 text(startdate, 40, "A", adj = c(0, 1), font = 2)
 # Second legend
-par(mar = c(0, 1.25, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space
+plot_white_space(margin = c(0, 1.25, 0, 0))
 legend("center", c("Volumetric water content", "Thermal conductivity"),
   col = c(blue, 1), ncol = 2, bty = "n",
   adj = c(0, 0.5), lwd = 2, lty = c(1, 3))
@@ -129,31 +119,15 @@ for (i in 1:4) {
   }
 }
 # Empty spaces and axis labels
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
 par(las = 0)
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
+# Plotting white space with 0 margin
+plot_white_space(margin = c(0, 0, 0, 0))
 par(las = 0)
 mtext("Thermal conductivity [W/mK]", side = 2, line = -1)
 dev.off()
