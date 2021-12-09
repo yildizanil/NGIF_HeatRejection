@@ -20,9 +20,9 @@ a_topsoil <- function(vwc) {
   ((0.25 / (1 + exp(-0.78 * (vwc - 11.3)))) + 0.23)
   }
 # importing datasets from the repository
-soil_temp_link <- "https://ndownloader.figshare.com/files/28324365?private_link = 17cf9f87af8a160f14c2"
-heat_flux_link <- "https://ndownloader.figshare.com/files/28324713?private_link = 5f8ecef47b99ce475574"
-vwc_link <- "https://figshare.com/ndownloader/files/29095197?private_link = 0c9aab5b3ab9471b4252"
+soil_temp_link <- "https://ndownloader.figshare.com/files/28324365?private_link=17cf9f87af8a160f14c2"
+heat_flux_link <- "https://ndownloader.figshare.com/files/28324713?private_link=5f8ecef47b99ce475574"
+vwc_link <- "https://figshare.com/ndownloader/files/29095197?private_link=0c9aab5b3ab9471b4252"
 soil_temp <- read.csv(soil_temp_link, stringsAsFactors = F)
 heat_flux <- read.csv(heat_flux_link, stringsAsFactors = F)
 vwc_measured <- read.csv(vwc_link, stringsAsFactors = F)
