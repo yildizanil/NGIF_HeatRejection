@@ -34,6 +34,15 @@ utc <- function(x) {
         }
 # plotting white space with a given margin
 plot_white_space <- function(margin) {
+    if (!is.vector(margin)) {
+       stop("Margin should be entered as a vector")
+    }
+    if (length(margin != 4)) {
+       stop("Four entries are required, i.e. one value for each side")
+    }
+    if (!is.numeric(margin)) {
+       stop("Margins should be entered as a numeric value")
+    }
   par(mar = margin, mgp = c(0.1, 0.1, 0),
   family = "serif", ps = 10,
   cex = 1, cex.main = 1, las = 1)
