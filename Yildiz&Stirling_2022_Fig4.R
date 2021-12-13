@@ -1,28 +1,15 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
-# Function to convert time data to POSIXct data with UTC time zone
-utc <- function(x) {
-  as.POSIXct(x, "UTC")
-  }
-plot_white_space <- function(margin) {
-  par(mar = margin, mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10,
-  cex = 1, cex.main = 1, las = 1)
-  plot(0, 0, pch = "",
-  xlab = NA, ylab = NA,
-  axes = F, xlim = c(0, 1), ylim = c(0, 1))
-}
+# importing self-written functions
+source("Functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
 # importing datasets from the repository
-vwc_link <- "https://figshare.com/ndownloader/files/29095197?private_link=0c9aab5b3ab9471b4252"
-water_flux_link <- "https://ndownloader.figshare.com/files/26388181?private_link=dbd3135fc6d61ea3e212"
-thermal_cond_link <- "https://ndownloader.figshare.com/files/26388400?private_link=a6ea892798672e5494fb"
-vwc <- read.csv(vwc_link, stringsAsFactors = F)
-water_flux <- read.csv(water_flux_link, stringsAsFactors = F)
-thermal_cond <- read.csv(thermal_cond_link, stringsAsFactors = F)
+vwc <- import_data("vwc")
+water_flux <- import_data("water_flux")
+thermal_cond <- import_data("thermal_conductivity")
 # RGB codes of NGIF colours used in the figures
 green <- rgb(157 / 256, 175 / 256, 33 / 256)
 blue <- rgb(32 / 256, 137 / 256, 203 / 256)
@@ -65,10 +52,9 @@ par(mar = c(0.25, 1.25, 0.25, 1.25), mgp = c(0.1, 0.1, 0),
 plot(0, 0, type = "l", lwd = 3,
   ylim = c(-10, 40), xlim = c(startdate, enddate),
   axes = F, xlab = NA, ylab = NA, pch = "")
-segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = -10,
-  x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 40, col = "gray87", lty = 1)
-segments(x0 = startdate, y0 = seq(-10, 40, 5),
-  x1 = enddate, y1 = seq(-10, 40, 5), col = "gray87", lty = 1)
+add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = -10, y_n = 40,
+        dx = 60 * 60 * 24, dy = 5)
 axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
 axis(1, tck = 0.04, at = axis_ticks1, labels = NA)
 axis(2, tck = 0.02)
@@ -97,10 +83,9 @@ for (i in 1:4) {
     family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
   plot(0, 0, xlim = c(startdate, enddate), ylim = c(0, 30),
     type = "l", axes = F, xlab = NA, ylab = NA)
-  segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = 0,
-    x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 30, col = "gray87")
-  segments(x0 = startdate, y0 = seq(0, 30, 5),
-    x1 = enddate, y1 = seq(0, 30, 5), col = "gray87")
+  add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = 0, y_n = 30,
+        dx = 60 * 60 * 24, dy = 5)
   axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
   axis(1, tck = 0.04, at = axis_ticks1, labels = NA)
   axis(2, tck = 0.02, at = c(0, 10, 20, 30), labels = c(0, 10, 20, 30))

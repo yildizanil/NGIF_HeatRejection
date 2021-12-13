@@ -1,16 +1,13 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
-# Function to convert time data to POSIXct data with UTC time zone
-utc <- function(x) {
-        as.POSIXct(x, tz = "UTC")
-        }
+# importing self-written functions
+source("Functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
 # importing datasets from the repository
-meteo_link <- "https://ndownloader.figshare.com/files/28394079?private_link=31e846de1eb5f79ac815"
-meteo <- read.csv(meteo_link, stringsAsFactors = F)
+meteo <- import_data("meteo")
 # RGB codes of NGIF colours used in the figures
 green <- rgb(157 / 256, 175 / 256, 33 / 256)
 blue <- rgb(32 / 256, 137 / 256, 203 / 256)
@@ -30,9 +27,7 @@ pdf(paste0(file_loc, "Yildiz&Stirling_2022_Fig3.pdf"),
 # creating a custom layout
 layout(matrix(c(1, 2, 3, 4), nrow = 4, ncol = 1), heights = c(15, 45, 45, 5))
 # legend
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-        family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlab = NA, ylab = NA, axes = F, pch = "")
+plot_white_space(margin = c(0, 0, 0, 0))
 legend("center", c("Rainfall", "Air temperature", "Max. - min. air temperature",
                   "Relative Humidity", "Max. - min. relative humidity",
                   "Net radiation"),
@@ -46,12 +41,9 @@ par(mar = c(1, 2.25, 0.25, 2.25), mgp = c(0.1, 0.1, 0),
         family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
 plot(0, 0, type = "l", lwd = 3, ylim = c(0, 50), xlim = c(startdate, enddate),
         axes = F, xlab = NA, ylab = NA, pch = "")
-segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = 0,
-         x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 50,
-         col = "gray87", lty = 1)
-segments(x0 = startdate, y0 = seq(0, 50, 10),
-         x1 = enddate, y1 = seq(0, 50, 10),
-         col = "gray87", lty = 1)
+add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = 0, y_n = 50,
+        dx = 60 * 60 * 24, dy = 10)
 axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
 axis(1, tck = 0.04, at = axis_ticks1, labels = axis_names)
 axis(2, tck = 0.02)
@@ -78,12 +70,9 @@ par(mar = c(1, 2.25, 0.25, 2.25), mgp = c(0.1, 0.1, 0),
         family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
 plot(0, 0, type = "l", lwd = 3, ylim = c(0, 100), xlim = c(startdate, enddate),
         axes = F, xlab = NA, ylab = NA, pch = "")
-segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = 0,
-         x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 100,
-         col = "gray87", lty = 1)
-segments(x0 = startdate, y0 = seq(0, 100, 20),
-         x1 = enddate, y1 = seq(0, 100, 20),
-         col = "gray87", lty = 1)
+add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = 0, y_n = 100,
+        dx = 60 * 60 * 24, dy = 20)
 axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
 axis(1, tck = 0.04, at = axis_ticks1, labels = axis_names)
 axis(2, tck = 0.02)

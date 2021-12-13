@@ -1,20 +1,15 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
-# Function to convert time data to POSIXct data with UTC time zone
-utc <- function(x) {
-  as.POSIXct(x, tz = "UTC")
-  }
+# importing self-written functions
+source("Functions.r")
 # time frame of Set I
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-08-06 00:00:00")
 # Importing datasets
-soil_temp_link <- "https://ndownloader.figshare.com/files/28324365?private_link=17cf9f87af8a160f14c2"
-meteo_link <- "https://ndownloader.figshare.com/files/28394079?private_link=31e846de1eb5f79ac815"
-heat_flux_link <- "https://ndownloader.figshare.com/files/28324713?private_link=5f8ecef47b99ce475574"
-soil_temp <- read.csv(soil_temp_link, header = T, stringsAsFactors = F)
-meteo <- read.csv(meteo_link, stringsAsFactors = F)
-heat_flux <- read.csv(heat_flux_link, stringsAsFactors = F)
+soil_temp <- import_data("soil_temperature")
+meteo <- import_data("meteo")
+heat_flux <- import_data("heat_flux")
 # extracting data from the time frame of Set I
 soil_temp_set1 <- soil_temp[which(utc(soil_temp[, 1]) > startdate - 1 &
                                     utc(soil_temp[, 1]) < enddate), ]
@@ -73,15 +68,14 @@ for (i in 1:3) {
   rect(xleft = utc(dates[i, 1]), ybottom = 15,
        xright = utc(dates[i, 2]), ytop = 30, border = NA, col = "gray90")
 }
-segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = 15,
-  x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 30, col = "gray87")
-segments(x0 = startdate, y0 = seq(15, 30, 2.5),
-  x1 = enddate, y1 = seq(15, 30, 2.5), col = "gray87")
+add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = 15, y_n = 30,
+        dx = 60 * 60 * 24, dy = 2.5)
 axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
 axis(1, tck = 0.04, at = axis_ticks1, labels = NA)
 axis(2, tck = 0.02, at = c(15, 20, 25, 30), labels = c(15, 20, 25, 30))
 box()
-for (i in seq_len(index_column)) {
+for (i in seq_len(length(index_column))) {
   points(x = utc(soil_temp_set1[seq(1, nrow(soil_temp_set1), 50), 1]),
     y = soil_temp_set1[seq(1, nrow(soil_temp_set1), 50), index_column[i]],
     col = index_col[i], pch = index_pch[i], cex = 0.8)
@@ -107,10 +101,9 @@ for (i in 1:3) {
   rect(xleft = as.POSIXct(dates[i, 1]), ybottom = -5,
        xright = as.POSIXct(dates[i, 2]), ytop = 35, border = NA, col = "gray90")
 }
-segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = -5,
-  x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 35, col = "gray87")
-segments(x0 = startdate, y0 = seq(-5, 35, 5),
-  x1 = enddate, y1 = seq(-5, 35, 5), col = "gray87")
+add_grid(x_0 = startdate, x_n = enddate,
+        y_0 = -5, y_n = 35,
+        dx = 60 * 60 * 24, dy = 5)
 axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
 axis(1, tck = 0.04, at = axis_ticks1, labels = axis_names)
 axis(2, tck = 0.02)

@@ -1,10 +1,8 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
-# Function to convert time data to POSIXct data with UTC time zone
-utc <- function(x) {
-  as.POSIXct(x,  tz  =  "UTC")
-  }
+# importing self-written functions
+source("Functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
@@ -20,12 +18,9 @@ a_topsoil <- function(vwc) {
   ((0.25 / (1 + exp(-0.78 * (vwc - 11.3)))) + 0.23)
   }
 # importing datasets from the repository
-soil_temp_link <- "https://ndownloader.figshare.com/files/28324365?private_link=17cf9f87af8a160f14c2"
-heat_flux_link <- "https://ndownloader.figshare.com/files/28324713?private_link=5f8ecef47b99ce475574"
-vwc_link <- "https://figshare.com/ndownloader/files/29095197?private_link=0c9aab5b3ab9471b4252"
-soil_temp <- read.csv(soil_temp_link, stringsAsFactors = F)
-heat_flux <- read.csv(heat_flux_link, stringsAsFactors = F)
-vwc_measured <- read.csv(vwc_link, stringsAsFactors = F)
+soil_temp <- import_data("soil_temperature")
+heat_flux <- import_data("heat_flux")
+vwc_measured <- import_data("vwc")
 # creating a dataset for observations
 depth <- sprintf("%03d", seq(50, 850, 50))
 data_observed <- data.frame(matrix(NA, nrow = nrow(soil_temp),
@@ -188,10 +183,9 @@ for (i in 1:8) {
     family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
   plot(0, 0, xlim = c(startdate, enddate), ylim = c(10, 30),
     type = "l", axes = F, xlab = NA, ylab = NA)
-  segments(x0 = seq(startdate, enddate, 60 * 60 * 24), y0 = 10,
-    x1 = seq(startdate, enddate, 60 * 60 * 24), y1 = 30, col = "gray87")
-  segments(x0 = startdate, y0 = seq(10, 30, 5),
-    x1 = enddate, y1 = seq(10, 30, 5), col = "gray87")
+  add_grid(x_0 = startdate, x_n = enddate,
+      y_0 = 10, y_n = 30,
+      dx = 60 * 60 * 24, dy = 5)
   axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
   axis(1, tck = 0.04, at = axis_ticks1, labels = NA)
   axis(2, tck = 0.02, at = c(15, 20, 25, 30), labels = c(15, 20, 25, 30))
