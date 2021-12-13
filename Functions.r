@@ -59,3 +59,16 @@ add_grid <- function(x_0, x_n, y_0, y_n, dx, dy) {
          x1 = x_n, y1 = seq(y_0, y_n, dy),
          col = "gray87", lty = 1)
 }
+# interpolation
+interpolate_soil_temperature <- function(first, second, at) {
+    index_first <- which(colnames(soil_temp) ==
+        paste0("Z", sprintf("%03d", first)))
+    index_second <- which(colnames(soil_temp) ==
+        paste0("Z", sprintf("%03d", second)))
+    index_at <- which(colnames(data_observed) ==
+        paste0("Z", sprintf("%03d", at)))
+    data_observed[, index_at] <- round(soil_temp[, index_first] +
+        ((at - first) / (second - first)) *
+        (soil_temp[, index_second] - soil_temp[, index_first]), 2)
+    return(data_observed)
+}
