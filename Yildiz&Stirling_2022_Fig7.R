@@ -6,74 +6,20 @@ source("Functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
-# defining volumetric heat capacity and thermal diffusivity of
-# sand and topsoil as a function of volumetric water content
-c_sand <- function(vwc) {
-  (296.4 + ((52.7 + 8.32 * (vwc - 5.27)) / (1 + exp(-3.24 * (vwc - 5.27)))))
-  }
-a_sand <- function(vwc) {
-  ((0.64 / (1 + exp(-1.72 * (vwc - 6.01)))) + 0.25)
-  }
-a_topsoil <- function(vwc) {
-  ((0.25 / (1 + exp(-0.78 * (vwc - 11.3)))) + 0.23)
-  }
 # importing datasets from the repository
 soil_temp <- import_data("soil_temperature")
 heat_flux <- import_data("heat_flux")
 vwc_measured <- import_data("vwc")
+# importing material properties
+source("FDM/material_properties.r")
+# importing metrics to assess model performance
+source("FDM/model_metrics.r")
 # creating a dataset for observations
 depth <- sprintf("%03d", seq(50, 850, 50))
-data_observed <- data.frame(matrix(NA, nrow = nrow(soil_temp),
-                                  ncol = length(depth) + 1),
-                                row.names  =  NULL)
-colnames(data_observed) <- c("Time", paste0("Z", depth))
-# defining column numbers for measurement and interpolation points
-index_to_fill <- which(colnames(data_observed) %in% colnames(soil_temp))
-index_to_take <- which(colnames(soil_temp) %in% colnames(data_observed))
-data_observed[index_to_fill] <- soil_temp[index_to_take]
-# performing interpolation for missing points - soil temperature
-data_observed$Z050 <- round(soil_temp$Z040 + ((50 - 40) / (70 - 40)) *
-  (soil_temp$Z070 - soil_temp$Z040), 2)
-data_observed$Z200 <- round(data_observed$Z150 + ((200 - 150) / (250 - 150)) *
-  (soil_temp$Z250 - soil_temp$Z150), 2)
-data_observed$Z300 <- round(data_observed$Z250 + ((300 - 250) / (350 - 250)) *
-  (soil_temp$Z350 - soil_temp$Z250), 2)
-data_observed$Z400 <- round(data_observed$Z350 + ((400 - 350) / (450 - 350)) *
-  (soil_temp$Z450 - soil_temp$Z350), 2)
-data_observed$Z500 <- round(data_observed$Z450 + ((500 - 450) / (550 - 450)) *
-  (soil_temp$Z550 - soil_temp$Z450), 2)
-data_observed$Z600 <- round(data_observed$Z550 + ((600 - 550) / (650 - 550)) *
-  (soil_temp$Z650 - soil_temp$Z550), 2)
-data_observed$Z700 <- round(data_observed$Z650 + ((700 - 650) / (750 - 650)) *
-  (soil_temp$Z750 - soil_temp$Z650), 2)
-# forming a dataset to store volumetric water content observations
-vwc <- data.frame(matrix(NA, nrow = nrow(vwc_measured),
-                        ncol = length(depth) + 1),
-                  row.names  =  NULL)
-colnames(vwc) <- c("Time", paste0("Z", depth))
-# defining column numbers for measurement and interpolation points
-index_to_fill_vwc <- which(colnames(vwc) %in% colnames(vwc_measured))
-index_to_take_vwc <- which(colnames(vwc_measured) %in% colnames(vwc))
-vwc[index_to_fill_vwc] <- vwc_measured[index_to_take_vwc]
-# performing interpolation for missing points
-# or assigning values of closest measurements for extrapolation
-vwc$Z050 <- vwc$Z100
-vwc$Z150 <- round(vwc$Z100 + ((150 - 100) / (250 - 100)) *
-  (vwc$Z250 - vwc$Z100), 2)
-vwc$Z200 <- round(vwc$Z100 + ((200 - 100) / (250 - 100)) *
-  (vwc$Z250 - vwc$Z100), 2)
-vwc$Z300 <- round(vwc$Z250 + ((300 - 250) / (350 - 250)) *
-  (vwc$Z350 - vwc$Z250), 2)
-vwc$Z400 <- round(vwc$Z350 + ((400 - 350) / (450 - 350)) *
-  (vwc$Z450 - vwc$Z350), 2)
-vwc$Z500 <- round(vwc$Z450 + ((500 - 450) / (550 - 450)) *
-  (vwc$Z550 - vwc$Z450), 2)
-vwc$Z600 <- round(vwc$Z550 + ((600 - 550) / (650 - 550)) *
-  (vwc$Z650 - vwc$Z550), 2)
-vwc$Z700 <- round(vwc$Z650 + ((700 - 650) / (750 - 650)) *
-  (vwc$Z750 - vwc$Z650), 2)
-vwc$Z800 <- vwc$Z750
-vwc$Z850 <- vwc$Z750
+# preprocessing soil temperature data
+source("FDM/preprocess_soil_temperature.r")
+# preprocessing soil temperature data
+source("FDM/preprocess_vwc.r")
 # forming a dataset to store thermal diffusivity
 alpha <- as.data.frame(matrix(NA, nrow = nrow(vwc), ncol = ncol(vwc)))
 colnames(alpha) <- colnames(vwc)
@@ -104,38 +50,6 @@ for (j in 1:(nrow(data_observed) - 1)) {
   data_predicted[j + 1, 18] <- round(data_predicted[j, 18] +
                                       (alpha[j, 18] * (t900[j] - 2 * data_predicted[j, 18] + data_predicted[j, 17]) * (0.25 * 60 * 60) / (50 * 50)) +
                                       (q850[j, 2] * 0.25) / (c_sand(vwc$Z750[j]) * (0.05)), 2)
-}
-# functions to assess model performance
-mape <- function(y_observed, y_predicted) {
-  if (length(y_observed) == length(y_predicted)) {
-    n <- length(y_observed)
-    metric <- 100 * (sum(abs((y_observed - y_predicted) / (y_observed))) / n)
-    return(metric)
-  }
-  else {
-    stop("Length of the observations and predictions should be equal")
-  }
-}
-rmse <- function(y_observed, y_predicted, normalise = T) {
-  if (length(y_observed) == length(y_predicted)) {
-    n <- length(y_observed)
-    rmse <- sqrt(sum((y_observed - y_predicted)^2) / n)
-    nrmse <- 100 * rmse / mean(y_observed)
-  }
-  else {
-    stop("Length of the observations and predictions should be equal")
-  }
-  if (normalise == T) {
-    return(nrmse)
-  } else {
-    return(rmse)
-  }
-}
-r2 <- function(y_observed, y_predicted) {
-  ss_res <- sum((y_observed - y_predicted)^2)
-  ss_tot <- sum((y_observed - mean(y_observed))^2)
-  r2 <- 1 - (ss_res / ss_tot)
-  return(r2)
 }
 # generating vectors to store model metrics
 mape_data <- NA
