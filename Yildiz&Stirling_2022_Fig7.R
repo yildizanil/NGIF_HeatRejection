@@ -7,25 +7,7 @@ source("Functions.r")
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
 # importing datasets from the repository
-soil_temp <- import_data("soil_temperature")
-heat_flux <- import_data("heat_flux")
-vwc_measured <- import_data("vwc")
-# importing material properties
-source("FDM/material_properties.r")
-# importing metrics to assess model performance
-source("FDM/model_metrics.r")
-# creating a dataset for observations
-depth <- sprintf("%03d", seq(50, 850, 50))
-# preprocessing soil temperature data
-source("FDM/preprocess_soil_temperature.r")
-# preprocessing volumetric water content data
-source("FDM/preprocess_vwc.r")
-# preprocessing thermal diffusifivity data
-source("FDM/preprocess_thermal_diffusivity.r")
-# calculating heat flux at the lower boundary
-source("FDM/calculate_heat_flux.r")
-# model calculation
-source("FDM/calculate_soil_temperature.r")
+source("FDM/00_main.r")
 # importing model metrics
 source("FDM/model_metrics.r")
 # generating vectors to store model metrics
