@@ -18,39 +18,16 @@ source("FDM/model_metrics.r")
 depth <- sprintf("%03d", seq(50, 850, 50))
 # preprocessing soil temperature data
 source("FDM/preprocess_soil_temperature.r")
-# preprocessing soil temperature data
+# preprocessing volumetric water content data
 source("FDM/preprocess_vwc.r")
-# forming a dataset to store thermal diffusivity
-alpha <- as.data.frame(matrix(NA, nrow = nrow(vwc), ncol = ncol(vwc)))
-colnames(alpha) <- colnames(vwc)
-alpha[, 1] <- vwc$Time
-alpha[, 2:3] <- a_topsoil(vwc[, 2:3])
-alpha[, 5:18] <- a_sand(vwc[, 5:18])
-alpha[, 4] <- rowMeans(cbind(a_topsoil(vwc[, 3]), a_sand(vwc[, 5])))
+# preprocessing thermal diffusifivity data
+source("FDM/preprocess_thermal_diffusivity.r")
 # calculating heat flux at the lower boundary
-t875 <- rowMeans(soil_temp[, c(13, 14)], na.rm = T)
-t900 <- soil_temp$Z900
-q850 <- data.frame(Time = vwc_measured[seq_len(nrow(vwc_measured) - 1), 1],
-                  Value = rep(NA, nrow(vwc_measured) - 1))
-for (i in seq_len(nrow(q850))) {
-  q850[i, 2] <- heat_flux$HF.Bottom[i] +
-    (c_sand(vwc_measured$Z750[i])) * ((t875[i + 1] - t875[i]) / 0.25) * 0.09 +
-    t875[i] * ((c_sand(vwc_measured$Z750[i + 1]) - c_sand(vwc_measured$Z750[i])) / 0.25) * 0.09
-}
-# forming a dataset to store predicted temperatures
-data_predicted <- data_observed
-data_predicted[2:nrow(data_observed), 3:ncol(data_observed)] <- NA
-# estimating soil temperature
-for (j in 1:(nrow(data_observed) - 1)) {
-  for (i in 3:(ncol(data_observed) - 1)) {
-    data_predicted[j + 1, i] <- round(data_predicted[j, i] +
-                                     (alpha[j, i] * (data_predicted[j, i + 1] - 2 * data_predicted[j, i] + data_predicted[j, i - 1]) * (0.25 * 60 * 60) / (50 * 50)) +
-                                     (alpha[j, i + 1] - alpha[j, i - 1]) * (data_predicted[j, i + 1] - data_predicted[j, i - 1]) * (0.25 * 60 * 60) / (2 * 2 * 50 * 50), 2)
-  }
-  data_predicted[j + 1, 18] <- round(data_predicted[j, 18] +
-                                      (alpha[j, 18] * (t900[j] - 2 * data_predicted[j, 18] + data_predicted[j, 17]) * (0.25 * 60 * 60) / (50 * 50)) +
-                                      (q850[j, 2] * 0.25) / (c_sand(vwc$Z750[j]) * (0.05)), 2)
-}
+source("FDM/calculate_heat_flux.r")
+# model calculation
+source("FDM/calculate_soil_temperature.r")
+# importing model metrics
+source("FDM/model_metrics.r")
 # generating vectors to store model metrics
 mape_data <- NA
 rmse_data <- NA
