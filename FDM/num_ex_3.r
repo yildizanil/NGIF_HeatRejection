@@ -6,11 +6,8 @@ source("Functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
-# importing thermal properties
-source("FDM/material_properties.r")
-# preprocessing volumetric water content data
-source("FDM/preprocess_vwc.r")
 # forming a dataset to store thermal diffusivity
+vwc[, 2:18] <- vwc[, 2:18] * 2
 alpha <- as.data.frame(matrix(NA, nrow = nrow(vwc), ncol = ncol(vwc)))
 colnames(alpha) <- colnames(vwc)
 alpha[, 1] <- vwc$Time
