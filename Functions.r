@@ -37,7 +37,7 @@ plot_white_space <- function(margin) {
     if (!is.vector(margin)) {
        stop("Margin should be entered as a vector")
     }
-    if (length(margin != 4)) {
+    if (length(margin) != 4) {
        stop("Four entries are required, i.e. one value for each side")
     }
     if (!is.numeric(margin)) {
