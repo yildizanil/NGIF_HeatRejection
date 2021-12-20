@@ -19,7 +19,7 @@ par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
 plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
   xlab = NA, ylab = NA, axes = F, pch = "")
 legend("center", c("k = 1.00", "k = 1.50", "k = 2.00"),
-  lwd = 1, lty = c(2,1,3), col = 1, hor = T, bty = "n")
+  lwd = 1, lty = c(2,1,3), col = 8, hor = T, bty = "n")
 par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
   family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
 plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
