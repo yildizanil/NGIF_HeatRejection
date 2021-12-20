@@ -14,7 +14,7 @@ axis_names <- paste0(substr(axis_seq, start = 9, stop = 10), "-",
 axis_ticks1 <- as.POSIXct(axis_seq, "UTC")
 axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
 # plotting Figure 9
-png(file = "Figures/Yildiz&Stirling_2022_Fig9.png", width = 150, height = 110,
+jpeg(filename = "Figures/Yildiz&Stirling_2022_Fig9.jpeg", width = 150, height = 110,
   units = "mm", res = 1000)
 layout(matrix(c(1, 2), nrow = 1, ncol = 2), widths = c(10, 2))
 par(mar = c(2, 2.25, 0.25, 0.25), mgp = c(0.1, 0.1, 0),
@@ -52,5 +52,5 @@ for (i in 1:20) {
   text(0.55, (i - 1) * (0.9 / 20), temp[i], adj = c(0, 0.5))
 }
 text(0.55, 0.9, 30, adj = c(0, 0.5))
-text(0, 1, "Temperature \n Â°C", adj = c(0, 1))
+text(0, 1, "Temperature \n °C", adj = c(0, 1))
 dev.off()
