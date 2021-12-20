@@ -11,7 +11,7 @@ import_data <- function(parameter) {
     # soil_temperature: soil temperature
     # heat_flux: heat flux measured at the bottom and top of lysimeter
     # csv file storing the downloadlinks
-    download_list <- read.csv("download_links.csv")
+    download_list <- read.csv("download_links.csv", stringsAsFactors = F)
     # checking if the parameter is a character
     if (!is.character(parameter)) {
         stop("Parameter should be of class character")
