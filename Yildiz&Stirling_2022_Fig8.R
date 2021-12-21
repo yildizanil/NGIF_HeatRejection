@@ -1,109 +1,85 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
-# importing numerical experiment functions
-source("FDM/numerical_experiments.r")
-ex1 <- num_ex_k_1()
-ex2 <- num_ex_k_2()
-ex3 <- num_ex_k_3()
-depth <- seq(50, 850, 50)
+# importing self-written functions
+source("Functions.r")
+# time frame presented in the manuscript
+startdate <- utc("2019-07-18 00:00:00")
+enddate <- utc("2019-09-12 00:00:00")
+# importing datasets from the repository
+source("FDM/00_main.r")
+# importing model metrics
+source("FDM/model_metrics.r")
+# generating vectors to store model metrics
+mape_data <- NA
+rmse_data <- NA
+r2_data <- NA
+# calculating model performance metrics
+for (k in 2:ncol(data_predicted)) {
+  mape_data[k] <- mape(y_observed = data_observed[, k],
+    y_predicted  =  data_predicted[, k])
+  rmse_data[k] <- rmse(y_observed = data_observed[, k],
+    y_predicted  =  data_predicted[, k], normalise  =  T)
+  r2_data[k] <- r2(y_observed = data_observed[, k],
+    y_predicted  =  data_predicted[, k])
+}
 # RGB codes of NGIF colours
 green <- rgb(157 / 256, 175 / 256, 33 / 256)
 blue <- rgb(32 / 256, 137 / 256, 203 / 256)
-pdf(file = "Figures/Yildiz&Stirling_2022_Fig8.pdf",
-  width = (90 / 25.4), height = c(170 / 25.4))
-layout(matrix(c(1, 2, 3, 4, 5, 6), nrow = 6, ncol = 1, byrow = T),
-  widths = 90, heights = c(5, 5, 50, 50, 50, 10))
+# Axis tick marks and labels
+axis_seq <- as.character(seq.Date(as.Date(startdate), as.Date(enddate), "week"))
+axis_names <- paste0(substr(axis_seq, start = 9, stop = 10), "-",
+  substr(axis_seq, start = 6, stop = 7))
+axis_ticks1 <- utc(axis_seq)
+axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
+# index of depth values to plot
+index <- c(3, 6, 8, 10, 12, 14, 16, 18)
+depth <- seq(50, 850, 50)
+# Defining file location
+file.loc <- "Figures/"
+# Plotting a pdf
+pdf(paste0(file.loc, "Yildiz&Stirling_2022_Fig8.pdf"),
+height = 140 / 25.4, width = 190 / 25.4)
+# Generating a layout
+layout(matrix(c(1, 2, 3, 4, 5, 10, 1, 6, 7, 8, 9, 10),
+              nrow = 6, ncol = 2, byrow = F),
+        width = c(95, 95), heights = c(10, 30, 30, 30, 30, 10))
+# Plotting subfigures
 par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
-  xlab = NA, ylab = NA, axes = F, pch = "")
-legend("center", c("k = 1.00", "k = 1.50", "k = 2.00"),
-  lwd = 1, lty = c(2,1,3), col = 8, hor = T, bty = "n")
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
-  xlab = NA, ylab = NA, axes = F, pch = "")
-legend("center", c("@ 650 mm", "@ 750 mm", "@ 850 mm"),
-  lwd = 1, lty = c(1), col = c(1, blue, green), hor = T, bty = "n", x.intersp  =  0.1)
-par(mar = c(0.25, 2.25, 0.25, 0.25), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
-  xlab = NA, ylab = NA, axes = F, pch = "")
-segments(x0 = seq(0, 288, 24), y0 = 16,
-  x1 = seq(0, 288, 24), y1 = 28,
-  col = "gray87")
-segments(x0 = 0, y0 = seq(16, 28, 1.2),
-  x1  = 288, y1 = seq(16, 28, 1.2),
-  col = "gray87")
-axis(1, tck = 0.02, at = seq(0, 288, 12), labels = NA)
-axis(2, tck = 0.02, at = seq(16, 28, 2.4))
-box()
-par(las = 0)
-mtext("Soil temperature [°C]", side = 2, line = 1.5)
-lines(ex1$Z650[131:418], col = 1, lwd = 1, lty = 2)
-lines(ex2$Z650[131:418], col = 1, lwd = 1, lty = 1)
-lines(ex3$Z650[131:418], col = 1, lwd = 2, lty = 3)
-lines(ex1$Z750[131:418], col = blue, lwd = 1, lty = 2)
-lines(ex2$Z750[131:418], col = blue, lwd = 1, lty = 1)
-lines(ex3$Z750[131:418], col = blue, lwd = 2, lty = 3)
-lines(ex1$Z850[131:418], col = green, lwd = 1, lty = 2)
-lines(ex2$Z850[131:418], col = green, lwd = 1, lty = 1)
-lines(ex3$Z850[131:418], col = green, lwd = 2, lty = 3)
-text(0, 28, "A", adj = c(0, 1), font = 2)
-par(mar = c(0.25, 2.25, 0.25, 0.25), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(20, 28),
-  xlab = NA, ylab = NA, axes = F, pch = "")
-segments(x0  = seq(0, 288, 24), y0 = 20,
-  x1  = seq(0, 288, 24), y1  = 28,
-  col = "gray87")
-segments(x0 = 0, y0 = seq(20, 28, 0.8),
-  x1  = 288, y1  = seq(20, 28, 0.8),
-  col = "gray87")
-axis(1, tck = 0.02, at = seq(0, 288, 12), labels = NA)
-axis(2, tck = 0.02, at = seq(20, 28, 1.6))
-box()
-par(las = 0)
-mtext("Soil temperature [°C]", side = 2, line = 1.5)
-lines(ex1$Z650[803:1090], col = 1, lwd = 1, lty = 2)
-lines(ex2$Z650[803:1090], col = 1, lwd = 1, lty = 1)
-lines(ex3$Z650[803:1090], col = 1, lwd = 2, lty = 3)
-lines(ex1$Z750[803:1090], col = blue, lwd = 1, lty = 2)
-lines(ex2$Z750[803:1090], col = blue, lwd = 1, lty = 1)
-lines(ex3$Z750[803:1090], col = blue, lwd = 2, lty = 3)
-lines(ex1$Z850[803:1090], col = green, lwd = 1, lty = 2)
-lines(ex2$Z850[803:1090], col = green, lwd = 1, lty = 1)
-lines(ex3$Z850[803:1090], col = green, lwd = 2, lty = 3)
-text(0, 28, "B", adj = c(0, 1), font = 2)
-par(mar = c(0.25, 2.25, 0.25, 0.25), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(19, 21),
-  xlab = NA, ylab = NA, axes = F, pch = "")
-segments(x0 = seq(0, 288, 24), y0  = 19,
-  x1  = seq(0, 288, 24), y1 = 21,
-  col = "gray87")
-segments(x0 = 0, y0 = seq(19, 21, 0.2),
-  x1 = 288, y1 = seq(19, 21, 0.2),
-  col = "gray87")
-axis(1, tck = 0.02, at = seq(0, 288, 12), labels = seq(0, 72, 3))
-axis(2, tck = 0.02, at = seq(19, 21, 0.4))
-box()
-par(las = 0)
-mtext("Soil temperature [°C]", side = 2, line = 1.5)
-mtext("Time [h]", side = 1, line = 1)
-lines(ex1$Z650[1475:1762], col = 1, lwd = 1, lty = 2)
-lines(ex2$Z650[1475:1762], col = 1, lwd = 1, lty = 1)
-lines(ex3$Z650[1475:1762], col = 1, lwd = 2, lty = 3)
-lines(ex1$Z750[1475:1762], col = blue, lwd = 1, lty = 2)
-lines(ex2$Z750[1475:1762], col = blue, lwd = 1, lty = 1)
-lines(ex3$Z750[1475:1762], col = blue, lwd = 2, lty = 3)
-lines(ex1$Z850[1475:1762], col = green, lwd = 1, lty = 2)
-lines(ex2$Z850[1475:1762], col = green, lwd = 1, lty = 1)
-lines(ex3$Z850[1475:1762], col = green, lwd = 2, lty = 3)
-text(0, 21, "C", adj = c(0, 1), font = 2)
-par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
-  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
-plot(0, 0, xlim = c(0, 300), ylim = c(16, 28),
-  xlab = NA, ylab = NA, axes = F, pch = "")
+  family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1, pty = "m")
+plot(0, 0, xlim = c(0, 0), ylim = c(10, 30),
+  type = "l", axes = F, xlab = NA, ylab = NA)
+legend("center", c("Measured", "Estimated"),
+  lwd = 2, lty = c(3, 1), col = c(1, blue), hor = T, bty = "n")
+for (i in 1:8) {
+  par(mar = c(0.25, 2, 0.25, 0.5), mgp = c(0.1, 0.1, 0),
+    family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
+  plot(0, 0, xlim = c(startdate, enddate), ylim = c(10, 30),
+    type = "l", axes = F, xlab = NA, ylab = NA)
+  add_grid(x_0 = startdate, x_n = enddate,
+      y_0 = 10, y_n = 30,
+      dx = 60 * 60 * 24, dy = 5)
+  axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
+  axis(1, tck = 0.04, at = axis_ticks1, labels = NA)
+  axis(2, tck = 0.02, at = c(15, 20, 25, 30), labels = c(15, 20, 25, 30))
+  box()
+  lines(data_predicted[, index[i]] ~ utc(data_observed$Time),
+    lwd = 1, col = blue, lty = 1)
+  lines(data_observed[, index[i]] ~ utc(data_observed$Time),
+    lwd = 2, col = 1, lty = 3)
+  text(enddate, 30,
+    paste0("nRMSE = ", round(rmse_data[index[i]], 2),  "%\n",
+          "MAPE = ", round(mape_data[index[i]], 2),  "%"), adj = c(1, 1))
+  text(startdate, 30, paste0(LETTERS[i]), adj = c(0, 1), font = 2)
+  if (i == 4 | i == 8) {
+    axis(1, tck = 0.02, at = axis_ticks2, labels = NA)
+    axis(1, tck = 0.04, at = axis_ticks1, labels = axis_names)
+    par(las = 0)
+    mtext("Time [DD-MM-2019]", side = 1, line = 1)
+  }
+  if (i == 2 | i == 6) {
+    par(las = 0)
+    mtext("Soil temperature [�C]", side = 2, line = 1, at = 10)
+  }
+}
 dev.off()
