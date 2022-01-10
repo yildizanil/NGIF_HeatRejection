@@ -1,5 +1,7 @@
 # NGIF_HeatRejection
 
+[![Launch Rstudio Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/NGIF_HeatRejection/main?urlpath=rstudio)
+
 This repository contains the scripts used in the publication "Ground heat exchange potential of Green Infrastructure" by Anil Yildiz & Ross A. Stirling. R scripts used in numerical modelling is listed in the folder "[FDM](https://github.com/yildizanil/NGIF_HeatRejection/tree/main/FDM)". Files used to predict the soil temperature are:
 
 - [00_main.r](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/FDM/00_main.r)

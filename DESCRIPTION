@@ -1,0 +1,12 @@
+Type: Compendium
+Package: NGIF - Heat rejection
+Title: What the Package Does (One Line, Title Case)
+Version: 0.0.1
+Authors@R: 
+    person("Anil", "Yildiz"", , "yildiz@mbd.rwth-aachen.de", role = c("aut", "cre"))
+Description: Collection of scripts used in Yildiz & Stirling (2022)
+License: What license it uses
+Depends: 
+    viridis
+Encoding: UTF-8
+LazyData: true
