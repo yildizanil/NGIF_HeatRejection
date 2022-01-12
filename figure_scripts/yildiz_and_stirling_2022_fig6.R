@@ -2,7 +2,9 @@
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
 # time frame of Set I
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-08-06 00:00:00")
@@ -39,9 +41,9 @@ index_name <- c("@ 100 mm", "@ 250 mm", "@ 350 mm", "@ 450 mm",
   "@ 550 mm", "@ 650 mm", "@ 750 mm", "@ 850 mm")
 index_column <- c(4, 6, 7, 8, 9, 10, 11, 13)
 # defining file location to export pdf
-file_loc <- "Figures/"
+file_loc <- "figures/"
 # plotting a pdf
-pdf(paste0(file_loc, "Yildiz&Stirling_2022_Fig6.pdf"),
+pdf(paste0(file_loc, "yildiz_and_stirling_2022_fig6.pdf"),
   height = 115 / 25.4, width = 150 / 25.4)
 # defining a custom layout
 layout(matrix(c(1, 2, 3, 4, 5), 5, 1),
@@ -84,7 +86,7 @@ for (i in seq_len(length(index_column))) {
 }
 points(meteo$AirTemp_Mean[1:18]~meteo_midday[1:18], col = 1, pch = 10)
 par(las = 0)
-mtext("Air/soil temperature [°C]", side = 2, line = 1)
+mtext("Air/soil temperature [Â°C]", side = 2, line = 1)
 for (i in 1:3) {
   text(utc(dates[i, 1]) + 60 * 60 * 36, 30, paste0("Test I-", i),
     adj = c(0.5, 1), font = 2)

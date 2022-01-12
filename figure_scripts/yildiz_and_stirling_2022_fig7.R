@@ -2,7 +2,9 @@
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
 # time frame of Set II
 startdate <- utc("2019-08-08 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
@@ -38,11 +40,10 @@ time <- seq(startdate, enddate, 60 * 15)
 diff <- soil_temp_set2[which(time %in% utc(dates[4:27, 2])), 4:14] -
        soil_temp_set2[which(time %in% utc(dates[4:27, 1])) + 1, 4:14]
 # defining file location to export pdf
-file_loc <- "Figures/"
+file_loc <- "figures/"
 # plotting a pdf file
-pdf(paste0(file_loc, "Yildiz&Stirling_2022_Fig7.pdf"),
+pdf(paste0(file_loc, "yildiz_and_stirling_2022_fig7.pdf"),
        height = 105 / 25.4, width = 150 / 25.4)
-
 layout(matrix(c(1, 2, 3), nrow = 3, ncol = 1, byrow = T),
        widths = c(150), heights = c(10, 50, 50))
 par(mar = c(0, 0, 0, 0), mgp = c(0.1, 0.1, 0),
@@ -64,7 +65,7 @@ axis(1, tck = 0.04, at = axis_ticks1, labels = axis_names)
 axis(2, tck = 0.02)
 box()
 par(las = 0)
-mtext("Soil temperature @ 850 mm [°C]", side = 2, line = 1.25)
+mtext("Soil temperature @ 850 mm [Â°C]", side = 2, line = 1.25)
 mtext("Time [DD-MM-2019]", side = 1, line = 1)
 
 lines(soil_temp_set2[, 13]~utc(soil_temp_set2$Time), lwd = 2, col = blue)
@@ -99,7 +100,7 @@ points(as.numeric(substr(colnames(diff), 2, 4)) ~ colMeans(diff),
        pch = 21, bg = blue)
 box()
 par(las = 0)
-mtext("Temperature difference [°C]", side = 1, line = 1)
+mtext("Temperature difference [Â°C]", side = 1, line = 1)
 mtext("Depth[mm]", side = 2, line = 1.25)
 text(-0.5, 0, "B", font = 2, adj = c(0, 1))
 dev.off()

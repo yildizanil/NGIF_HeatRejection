@@ -1,10 +1,13 @@
 # Ground heat exchange potential of Green Infrastructure
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
-# importing self written functions
-source("Functions.r")
+# importing self-written functions
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
+source("functions/interpolate_soil_temperature.r")
 # performing model calculation
-source("FDM/00_main.r")
+source("finite_difference_modelling/00_main.r")
 depth <- seq(50, 850, 50)
 time <- seq(startdate, enddate, 60 * 60 * 0.25)
 temp <- seq(10, 30, 1)
@@ -14,8 +17,8 @@ axis_names <- paste0(substr(axis_seq, start = 9, stop = 10), "-",
 axis_ticks1 <- as.POSIXct(axis_seq, "UTC")
 axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
 # plotting Figure 9
-jpeg(filename = "Figures/Yildiz&Stirling_2022_Fig10.jpeg", width = 150, height = 110,
-  units = "mm", res = 600)
+jpeg(filename = "figures/yildiz_and_stirling_2022_fig10.jpeg",
+  width = 150, height = 110, units = "mm", res = 600)
 layout(matrix(c(1, 2), nrow = 1, ncol = 2), widths = c(10, 2))
 par(mar = c(2, 2.25, 0.25, 0.25), mgp = c(0.1, 0.1, 0),
   family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)
@@ -52,5 +55,5 @@ for (i in 1:20) {
   text(0.55, (i - 1) * (0.9 / 20), temp[i], adj = c(0, 0.5))
 }
 text(0.55, 0.9, 30, adj = c(0, 0.5))
-text(0, 1, "Temperature \n °C", adj = c(0, 1))
+text(0, 1, "Temperature \n Â°C", adj = c(0, 1))
 dev.off()

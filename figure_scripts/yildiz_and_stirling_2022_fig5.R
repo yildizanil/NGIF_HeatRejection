@@ -2,7 +2,9 @@
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
@@ -20,14 +22,16 @@ axis_names <- paste0(substr(axis_seq, start = 9, stop = 10), "-",
 axis_ticks1 <- utc(axis_seq)
 axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
 # defining file location to export pdf
-file_loc <- "Figures/"
+file_loc <- "figures/"
 # Plotting a pdf
-pdf(paste0(file_loc, "Yildiz&Stirling_2022_Fig5.pdf"),
+pdf(paste0(file_loc, "yildiz_and_stirling_2022_fig5.pdf"),
   height = 130 / 25.4, width = 150 / 25.4)
 # Creating a custom layout
 layout(
-  matrix(c(1, 2, 2, rep(3, 5), c(4, 5, 6, 7, 8, 9, 10, 11), 12, 13, 13, rep(14, 5)),
-  nrow = 8, ncol = 3), heights = c(5, 30, 5, 20, 20, 20, 20, 10),
+  matrix(c(1, 2, 2, rep(3, 5),
+          c(4, 5, 6, 7, 8, 9, 10, 11), 12, 13, 13, rep(14, 5)),
+        nrow = 8, ncol = 3),
+  heights = c(5, 30, 5, 20, 20, 20, 20, 10),
   widths = c(5, 140, 5))
 # Axis labels in empty spaces
 # Plotting white space with 0 margin

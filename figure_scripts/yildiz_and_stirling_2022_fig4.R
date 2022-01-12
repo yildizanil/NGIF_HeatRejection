@@ -2,7 +2,9 @@
 # Yildiz, A. and Stirling, R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
@@ -20,9 +22,9 @@ substr(axis_seq, start = 6, stop = 7))
 axis_ticks1 <- utc(axis_seq)
 axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
 # defining file location to export pdf
-file_loc <- "Figures/"
+file_loc <- "figures/"
 # plotting a pdf file
-pdf(paste0(file_loc, "Yildiz&Stirling_2022_Fig4.pdf"),
+pdf(paste0(file_loc, "yildiz_and_stirling_2022_fig4.pdf"),
         height = 110 / 25.4, width = 150 / 25.4)
 # creating a custom layout
 layout(matrix(c(1, 2, 3, 4), nrow = 4, ncol = 1), heights = c(15, 45, 45, 5))
@@ -64,7 +66,7 @@ lines(meteo$AirTemp_Mean~utc(meteo$Time), col = 2, lwd = 2)
 par(las = 0)
 box()
 mtext("Daily rainfall [mm]", side = 2, line = 1.25)
-mtext("Air temperature [°C]", side = 4, line = 1.25)
+mtext("Air temperature [Â°C]", side = 4, line = 1.25)
 # second subplot
 par(mar = c(1, 2.25, 0.25, 2.25), mgp = c(0.1, 0.1, 0),
         family = "serif", ps = 10, cex = 1, cex.main = 1, las = 1)

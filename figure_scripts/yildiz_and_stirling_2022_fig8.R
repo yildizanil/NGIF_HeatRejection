@@ -2,14 +2,17 @@
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/utc.r")
+source("functions/plotting_functions.r")
+source("functions/interpolate_soil_temperature.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
-# importing datasets from the repository
-source("FDM/00_main.r")
+# running the finite difference model
+source("finite_difference_modelling/00_main.r")
 # importing model metrics
-source("FDM/model_metrics.r")
+source("finite_difference_modelling/model_metrics.r")
 # generating vectors to store model metrics
 mape_data <- NA
 rmse_data <- NA
@@ -36,9 +39,9 @@ axis_ticks2 <- seq(startdate, enddate, 60 * 60 * 24)
 index <- c(3, 6, 8, 10, 12, 14, 16, 18)
 depth <- seq(50, 850, 50)
 # Defining file location
-file.loc <- "Figures/"
+file_loc <- "figures/"
 # Plotting a pdf
-pdf(paste0(file.loc, "Yildiz&Stirling_2022_Fig8.pdf"),
+pdf(paste0(file_loc, "yildiz_and_stirling_2022_fig8.pdf"),
 height = 140 / 25.4, width = 190 / 25.4)
 # Generating a layout
 layout(matrix(c(1, 2, 3, 4, 5, 10, 1, 6, 7, 8, 9, 10),
@@ -79,7 +82,7 @@ for (i in 1:8) {
   }
   if (i == 2 | i == 6) {
     par(las = 0)
-    mtext("Soil temperature [°C]", side = 2, line = 1, at = 10)
+    mtext("Soil temperature [Â°C]", side = 2, line = 1, at = 10)
   }
 }
 dev.off()
