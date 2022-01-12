@@ -2,7 +2,9 @@
 # Yildiz,  A. and Stirling,  R.A.
 # Submitted to Geothermics
 # importing self-written functions
-source("Functions.r")
+source("functions/import_data.r")
+source("functions/interpolate_soil_temperature.r")
+source("functions/utc.r")
 # time frame presented in the manuscript
 startdate <- utc("2019-07-18 00:00:00")
 enddate <- utc("2019-09-12 00:00:00")
