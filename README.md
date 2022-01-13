@@ -16,13 +16,13 @@ The file [00_main.r](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/
 
 The scripts used to produce the figures in the publication are listed in the main branch:
 
-- [yildiz_and_stirling_2022_fig4.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig4.R)
-- [yildiz_and_stirling_2022_fig5.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig5.R)
-- [yildiz_and_stirling_2022_fig6.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig6.R)
-- [yildiz_and_stirling_2022_fig7.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig7.R)
-- [yildiz_and_stirling_2022_fig8.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig8.R)
-- [yildiz_and_stirling_2022_fig9.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig9.R)
-- [yildiz_and_stirling_2022_fig10.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_sirling_2022_fig10.R)
+- [yildiz_and_stirling_2022_fig4.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig4.R)
+- [yildiz_and_stirling_2022_fig5.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig5.R)
+- [yildiz_and_stirling_2022_fig6.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig6.R)
+- [yildiz_and_stirling_2022_fig7.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig7.R)
+- [yildiz_and_stirling_2022_fig8.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig8.R)
+- [yildiz_and_stirling_2022_fig9.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig9.R)
+- [yildiz_and_stirling_2022_fig10.R](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/figure_scripts/yildiz_and_stirling_2022_fig10.R)
 
 A reproducible version of the publication is available as a Jupyter Notebook.
 
