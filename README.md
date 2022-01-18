@@ -1,4 +1,4 @@
-# PLEXUS @ NGIF - Heat rejection
+# PLEXUS @ NGIF - Heat injection
 
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/ngif_heat_rejection/HEAD)
 
