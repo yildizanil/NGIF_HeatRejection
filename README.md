@@ -1,6 +1,6 @@
 # PLEXUS @ NGIF - Heat injection
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/ngif_heat_rejection/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/ngif_heat_injection/HEAD)
 
 This repository contains the scripts used in the publication "Ground heat exchange potential of Green Infrastructure" by Anil Yildiz & Ross A. Stirling. R scripts used in numerical modelling is listed in the folder "[finite_difference_modelling](https://github.com/yildizanil/NGIF_HeatRejection/tree/main/finite_difference_modelling)". Files used to predict the soil temperature are:
 
