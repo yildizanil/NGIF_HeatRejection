@@ -26,4 +26,4 @@ The scripts used to produce the figures in the publication are listed in the mai
 
 A reproducible version of the publication is available as a Jupyter Notebook.
 
-[Yildiz & Stirling (2022) - Ground heat exchange potential of Green Infrastructure.ipynb](https://github.com/yildizanil/NGIF_HeatRejection/blob/main/Yildiz%20%26%20Stirling%20(2022)%20-%20Ground%20heat%20exchange%20potential%20of%20Green%20Infrastructure.ipynb)
+[Yildiz & Stirling (2022) - Ground heat exchange potential of Green Infrastructure.ipynb](https://github.com/yildizanil/ngif_heat_injection/blob/main/yildiz_and_stirling_2022.ipynb)
