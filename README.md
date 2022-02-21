@@ -1,6 +1,6 @@
 # PLEXUS @ NGIF - Heat injection
 
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/ngif_heat_injection/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/yildizanil/ngif_heat_injection/HEAD) https://img.shields.io/github/last-commit/yildizanil/ngif_heat_rejection?logoColor=success
 
 [![Doi](https://img.shields.io/badge/doi-10.1016%2Fj.geothermics.2022.102351-success)](https://doi.org/10.1016/j.geothermics.2022.102351)
 
